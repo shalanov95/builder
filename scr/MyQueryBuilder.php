@@ -28,6 +28,35 @@
                 $this->query->type = 'select';
             return $this;
         }
+        public function insert($table, $arr)
+        {
+            $this->reset();
+            $data = [];
+            foreach ($arr as $key => $value) {
+                $data[] = "`$key` = '".trim($value)."'";
+            }
+            $this->query->base = "INSERT INTO " . $table . " SET " . implode(", ", $data);
+            $this->query->type = 'insert';
+            return $this;
+        }
+        public function update($table, $arr)
+        {
+            $this->reset();
+            $data = [];
+            foreach ($arr as $key => $value) {
+                $data[] = "`$key` = '".trim($value)."'";
+            }
+            $this->query->base = "UPDATE " . $table . " SET " . implode(", ", $data);
+            $this->query->type = 'update';
+            return $this;
+        }
+        public function delete()
+        {
+            $this->reset();
+            $this->query->base = "DELETE ";
+            $this->query->type = 'delete';
+            return $this;
+        }
         public function from($table)
         {
             $this->query->from = " FROM " . $table;
@@ -66,12 +95,11 @@
         public function execute()
         {
             $query = $this->query;
+//            ($query->type =='select'or $query->type =='delete') ? $sql = $query->base . $query->from : $sql = $query->base;
             $sql = $query->base . $query->from;
-
             if (!empty($query->where)) {
                 $sql .= " WHERE " . implode(' AND ', $query->where);
             }
-
             if (isset($query->limit)) {
                 $sql .= $query->limit;
             }
@@ -83,22 +111,12 @@
                 return $result;
             }
         }
-
-
-
-
-//        public function execute()
-//        {
-//            $result = $this->requestMysql($this->sql);
-//            return $result;
-//        }
         public function findMany($query)
         {
             $result = mysqli_query(self::$link, $query) or die(mysqli_error(self::$link));
             for ($data = []; $row = mysqli_fetch_assoc($result); $data[] = $row);
             return $data;
         }
-
         protected function requestMysql($query)
         {
             $result = mysqli_query(self::$link, $query) or die(mysqli_error(self::$link));
