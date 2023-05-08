@@ -28,17 +28,19 @@ $id=7;
 
 $db2 = new MyQueryBuilder($confPostgresql);
 $table = 'users';
-$result = $db2->select(['users.id', 'users.name as user_name', 'users.age', 'work.title', 'dep.name'])
-    ->from($table)
-    ->join($table,'work', 'work_id', 'id', 'LEFT OUTER JOIN')
-    ->join('work','dep', 'id', 'work_id', 'LEFT OUTER JOIN')
-    ->where('age','20','>')
-    ->limit(2,1)
-    ->execute();
-
+//$result = $db2->select(['users.id', 'users.name as user_name', 'users.age', 'work.title', 'dep.name'])
+//    ->from($table)
+//    ->join($table,'work', 'work_id', 'id', 'LEFT OUTER JOIN')
+//    ->join('work','dep', 'id', 'work_id', 'LEFT OUTER JOIN')
+//    ->where('age','20','>')
+//    ->limit(2,1)
+//    ->execute();
+$data = ['name'=>'gugu', 'age' => 22, 'work_id' => 1, 'dep_id' => 2];
+$result = $db->insert($table, $data)->execute();
 //$result = $db2->select([])->from('users')->execute();
-for ($data = []; $row = pg_fetch_assoc($result); $data[] = $row);
+//for ($data = []; $row = pg_fetch_assoc($result); $data[] = $row);
 
 echo('<pre>');
-var_dump($data);
+var_dump($result);
+//var_dump($data);
 echo('</pre>');

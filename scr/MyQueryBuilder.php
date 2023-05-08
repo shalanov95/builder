@@ -30,11 +30,15 @@
         public function insert($table, $arr)
         {
             $this->reset();
+            $columns = [];
             $data = [];
             foreach ($arr as $key => $value) {
-                $data[] = "`$key` = '".trim($value)."'";
+//              $data[] = "`$key` = '".trim($value)."'";
+                $columns[] = $key;
+                $data[] ="'$value'";
             }
-            $this->query->base = "INSERT INTO " . $table . " SET " . implode(", ", $data);
+//           $this->query->base = "INSERT INTO " . $table . " SET " . implode(", ", $data);
+            $this->query->base = "INSERT INTO " . $table . ' (' . implode(", ", $columns) . ') VALUES (' . implode(", ", $data) . ');';
             $this->query->type = 'insert';
             return $this;
         }
