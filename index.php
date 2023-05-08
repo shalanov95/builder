@@ -15,19 +15,19 @@ $id=7;
 //$result = $db->update($table, $data)->where('id', $id, '=')->execute();
 //$result = $db->delete()->from($table)->where('id', $id, '=')->execute();
 //$result = $db->select([])->from($table)->execute();
-//$result = $db->select(['users.id', 'users.name as user_name', 'users.age', 'work.title', 'dep.name'])
-//    ->from($table)
-//    ->join($table,'work', 'work_id', 'id')
-//    ->join('work','dep', 'id', 'work_id')
-//    ->where('age','21','>')
-//    ->limit(2)
-//    ->execute();
-//for ($data = []; $row = mysqli_fetch_assoc($result); $data[] = $row);
+$result = $db->select(['users.id', 'users.name as user_name', 'users.age', 'work.title', 'dep.name'])
+    ->from($table)
+    ->join($table,'work', 'work_id', 'id')
+    ->join('work','dep', 'id', 'work_id')
+    ->where('age','21','>')
+    ->limit(2)
+    ->execute();
+for ($data = []; $row = mysqli_fetch_assoc($result); $data[] = $row);
 
 // тестриуем PosgresSQL
 
-$db2 = new MyQueryBuilder($confPostgresql);
-$table = 'users';
+//$db2 = new MyQueryBuilder($confPostgresql);
+//$table = 'users';
 //$result = $db2->select(['users.id', 'users.name as user_name', 'users.age', 'work.title', 'dep.name'])
 //    ->from($table)
 //    ->join($table,'work', 'work_id', 'id', 'LEFT OUTER JOIN')
@@ -35,12 +35,10 @@ $table = 'users';
 //    ->where('age','20','>')
 //    ->limit(2,1)
 //    ->execute();
-$data = ['name'=>'gugu', 'age' => 22, 'work_id' => 1, 'dep_id' => 2];
-$result = $db->insert($table, $data)->execute();
-//$result = $db2->select([])->from('users')->execute();
+////$result = $db2->select([])->from('users')->execute();
 //for ($data = []; $row = pg_fetch_assoc($result); $data[] = $row);
 
 echo('<pre>');
-var_dump($result);
-//var_dump($data);
+//var_dump($result);
+var_dump($data);
 echo('</pre>');
