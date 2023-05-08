@@ -6,3 +6,12 @@ $confMysql = [
     'db' => 'root',
     'type' => 'mysql',
 ];
+$confPostgresql= [
+    'host' => 'localhost',
+    'user' => 'postgres',
+    'pass' => 'postgres',
+    'schema' => 'public',
+    'db' => 'postgres',
+    'port'=> '5432',
+    'type' => 'postgres',
+];
