@@ -33,11 +33,9 @@
             $columns = [];
             $data = [];
             foreach ($arr as $key => $value) {
-//              $data[] = "`$key` = '".trim($value)."'";
                 $columns[] = $key;
                 $data[] ="'$value'";
             }
-//           $this->query->base = "INSERT INTO " . $table . " SET " . implode(", ", $data);
             $this->query->base = "INSERT INTO " . $table . ' (' . implode(", ", $columns) . ') VALUES (' . implode(", ", $data) . ');';
             $this->query->type = 'insert';
             return $this;
@@ -69,7 +67,7 @@
             return $this;
         }
 
-        public function join($ptable,$ctable, $pid, $cid, $typejoin='LEFT JOIN', $operator = '=')
+        public function join($ptable, $ctable, $pid, $cid, $typejoin = 'LEFT JOIN', $operator = '=')
         {
             if (!in_array($this->query->type, ['select'])) {
                 throw new \Exception("Join can only be added to SELECT");
@@ -117,7 +115,6 @@
         public function execute()
         {
             $query = $this->query;
-//            ($query->type =='select'or $query->type =='delete') ? $sql = $query->base . $query->from : $sql = $query->base;
             $sql = $query->base . $query->from;
             if (!empty($query->join)) {
                 $sql .= $query->join;
@@ -128,8 +125,8 @@
             if (isset($query->limit)) {
                 $sql .= $query->limit;
             }
-            var_dump($sql);
-            var_dump($this->config['type']);
+//            var_dump($sql);
+//            var_dump($this->config['type']);
             $this->sql = $sql . ";";
             if($this->config['type'] =='mysql')
                 $result = $this->requestMysql($sql);
